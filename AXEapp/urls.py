@@ -4,6 +4,9 @@ from .api import roles_api_view, rol_detalle_api_view,donantes_api_view, donante
 from .api import donaciones_api_view, donaciones_detalle_api_view,evaluacion_api_view, evaluacion_detalle_api_view
 from .api import permisos_api_view, permiso_detalle_api_view, usuarios_api_view, usuarios_detalle_api_view
 from .api import centro_educativo_api_view, centro_educativo_detalle_api_view, contrasenia_api_view, contrasenia_detalle_api_view
+from .api import user_api_view, user_detail_api_view
+
+from .views import Login, Logout
 
 urlpatterns = [
     path('Roles/', roles_api_view, name='roles'),
@@ -22,5 +25,14 @@ urlpatterns = [
     path('Usuarios/<int:pk>', usuarios_detalle_api_view, name='usuarios_detalle'),
     path('Recuperar_Contrasenia/', contrasenia_api_view, name='contrasenia'),
     path('Recuperar_Contrasenia/<int:pk>', contrasenia_detalle_api_view, name='contrasenia_detalle'),
+
+
+    path('usuario/', user_api_view, name='usuario_api'),
+    path('usuario/<int:pk>', user_detail_api_view, name='usuario_detail_api_view'),
+
+    path('Login', Login.as_view(), name='Login'),
+    path('Logout', Logout.as_view(), name='Logout'),
+
+
     #path('usuario/', UserAPIView.as_view(), name='usuario_api')
 ]

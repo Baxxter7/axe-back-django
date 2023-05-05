@@ -40,7 +40,11 @@ INSTALLED_APPS = [
     'corsheaders',
     'AXEapp',
     'rest_framework',
+    'rest_framework.authtoken',
+    'simple_history'
 ]
+
+TOKEN_EXPIRED_AFTER_SECONDS = 10
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -51,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'AXE.urls'
@@ -80,15 +85,42 @@ WSGI_APPLICATION = 'AXE.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'SISTEMA_AXE 1.0',
+        'NAME': 'AXE',
         'USER': 'postgres',
-        'PASSWORD': 'Amador0815.',
+        'PASSWORD': 'admin',
         'HOST': 'localhost',
         'DATABASE_PORT': '5432',
 
     }
 }
 
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'axe',
+        'USER': 'administrador',
+        'PASSWORD': 'Python2001@',
+        'HOST': 'sistema-axe-test.postgres.database.azure.com',
+        'DATABASE_PORT': '5432',
+
+    }
+}
+
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'AXE',
+        'USER': 'postgres',
+        'PASSWORD': 'admin',
+        'HOST': 'localhost',
+        'DATABASE_PORT': '5432',
+
+    }
+}
+"""
+#'NAME': 'SISTEMA_AXE',
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -132,5 +164,6 @@ STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+AUTH_USER_MODEL = 'AXEapp.User'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from  AXEapp.views import Login
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-     path('AXE/', include('AXEapp.urls')),
+    path('AXE/', include('AXEapp.urls')),
+    path('', Login.as_view(), name='Login')
 ]

@@ -1,8 +1,12 @@
 
 from rest_framework.response import Response #para responder
-from .models import Seg_Roles, Donaciones, Seg_Permisos,Centro_Educativo, Donantes,AxeEvaluacion, Usuarios, Recuperar_Contrasenia
+from .models import Seg_Roles, Donaciones, Seg_Permisos,Centro_Educativo, Donantes,AxeEvaluacion, Usuarios, Recuperar_Contrasenia, User
+
+from .models import User
+
 from .Seriealizers import Seg_Roles_Seriealizers, Donaciones_Seriealizers, Seg_Permisos_Seriealizers, Usuarios_Seriealizers
-from .Seriealizers import Centro_Educativo_Seriealizers, Donantes_Seriealizers, AxeEvaluacion_Seriealizers, Recuperar_Contrasenia_Seriealizers
+from .Seriealizers import Centro_Educativo_Seriealizers, Donantes_Seriealizers, AxeEvaluacion_Seriealizers, Recuperar_Contrasenia_Seriealizers, UserListSerializer, UserSerializer
+
 from rest_framework.decorators import api_view
 from rest_framework import status
 
@@ -546,3 +550,50 @@ def contrasenia_detalle_api_view(request, pk = None): #pk 2
                        return Response({'message':'¡Recuperacion actualizada correctamente!'}, status = status.HTTP_201_CREATED) #Envia los datos actualizados)
                 else:
                     return Response(contrasenia_serializer.errors, status= status.HTTP_400_BAD_REQUEST)
+                
+@api_view(['GET', 'POST']) #Le indicamos que metodos tenemos permitidos para esa funcion
+def user_api_view(request):
+    #list
+    if request.method == 'GET':
+        #queryset
+        users = User.objects.all().values('id', 'username', 'email', 'password')
+        users_serializer = UserListSerializer(users, many = True) #Indicamos many, porque es un listado, no solo uno          
+
+        return Response(users_serializer.data, status = status.HTTP_200_OK)
+    
+    #create
+    elif request.method == 'POST':
+        user_serializer = UserSerializer(data= request.data )# 
+        if user_serializer.is_valid(): #Revisar que sucede cuando no es valido
+            user_serializer.save() #Guarda los datos en la base de datos
+            return Response({'message':'¡Usuario creado correctamente!'}, status = status.HTTP_201_CREATED) #Envia los datos actualizados
+        return Response({'message':'¡Ha ocurrido algo inesperado!'}, status= status.HTTP_400_BAD_REQUEST) #Si existen errores, los devuelve
+    
+@api_view(['GET', 'PUT', 'DELETE'])
+def user_detail_api_view(request, pk = None):
+    #queryset
+    user = User.objects.filter(id = pk).first() #Obtenemos el elemento buscado
+    #validation
+    if user:
+        # retrieve
+        if request.method == 'GET':
+            user_serializer = UserSerializer(user)
+            return Response(user_serializer.data, status=status.HTTP_200_OK)
+        
+        # update
+        elif request.method == 'PUT':
+            user = User.objects.filter(id = pk).first() #Obtenemos el elemento buscado
+            user_serializer = UserSerializer(user, data = request.data) #Le pasamos la instancia a modificar y la nueva informacion que reemplazara a la anterior
+            if user_serializer.is_valid():
+                user_serializer.save()
+                return Response({'message':'¡Usuario actualizado correctamente!'}, status=status.HTTP_200_OK)
+            return Response({'message':'¡Ha ocurrido algo inesperado!'}, status=status.HTTP_400_BAD_REQUEST)
+
+        
+        # delete
+        elif request.method == 'DELETE':
+            user = User.objects.filter(id = pk).first()
+            user.delete()
+            return Response({'message':'¡Usuario eliminado correctamente!'}, status=status.HTTP_200_OK)
+        
+    Response({'message':'No se ha encontrado un usuario con esos datos'}, status=status.HTTP_400_BAD_REQUEST)
