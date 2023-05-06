@@ -34,7 +34,7 @@ def roles_api_view(request):
 
         if roles_serializer.is_valid(): #Revisar que sucede cuando no es valido
            cursor = connection.cursor()
-           cursor.execute("SELECT SP_ROLES('I', %s,%s)", [cod_roles,tip_roles])
+           cursor.execute("SELECT sp_seg_roles('I', %s,%s)", [cod_roles,tip_roles])
            cursor.close() #para cerrar la conexion a base de datos
 
            return Response({'message':'¡Rol creado correctamente!'}, status = status.HTTP_201_CREATED) #Envia los datos actualizados
@@ -69,7 +69,7 @@ def rol_detalle_api_view(request, pk = None): #pk 2
                    
 
                     cursor = connection.cursor()                    
-                    cursor.execute("SELECT SP_ROLES('U', %s, %s)", [cod_rol, tip_roles])
+                    cursor.execute("SELECT sp_seg_roles('U', %s, %s)", [cod_rol, tip_roles])
                     cursor.close() #para cerrar la conexion a base de dato
                     
                     return Response({'message':'¡Rol actualizado correctamente!'}, status = status.HTTP_201_CREATED) #Envia los datos actualizados)
