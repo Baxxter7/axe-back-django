@@ -440,7 +440,7 @@ def usuarios_api_view(request):
         
         if usuarios_serializer.is_valid(): #Revisar que sucede cuando no es valido
            cursor = connection.cursor()
-           cursor.execute("SELECT SP_USUARIOS('I', %s,%s,%s,%s,%s,%s,%s)", [cod_usuario,nom_usuario,contrasenia,estado_usuario,cod_rol,telefono,email])
+           cursor.execute("SELECT sp_usuarios('I', %s,%s,%s,%s,%s,%s,%s)", [cod_usuario,nom_usuario,contrasenia,estado_usuario,cod_rol,telefono,email])
            cursor.close() #para cerrar la conexion a base de datos
 
            return Response({'message':'¡Usuario creado correctamente!'}, status = status.HTTP_201_CREATED) #Envia los datos actualizados
@@ -479,7 +479,7 @@ def usuarios_detalle_api_view(request, pk = None): #pk 2
                    
 
                       cursor = connection.cursor()                    
-                      cursor.execute("SELECT SP_USUARIOS('U', %s,%s,%s,%s,%s,%s,%s)", [cod_usuario,nom_usuario,contrasenia,estado_usuario,cod_rol,telefono,email])
+                      cursor.execute("SELECT sp_usuarios('U', %s,%s,%s,%s,%s,%s,%s)", [cod_usuario,nom_usuario,contrasenia,estado_usuario,cod_rol,telefono,email])
                       cursor.close() #para cerrar la conexion a base de dato
                     
                       return Response({'message':'¡Usuario actualizado correctamente!'}, status = status.HTTP_201_CREATED) #Envia los datos actualizados)
