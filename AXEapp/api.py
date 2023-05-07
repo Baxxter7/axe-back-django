@@ -167,7 +167,7 @@ def permisos_api_view(request):
 
         if permisos_serializer.is_valid(): #Revisar que sucede cuando no es valido
            cursor = connection.cursor()
-           cursor.execute("SELECT SP_PERMISOS('I', %s,%s,%s,%s,%s,%s)", [cod_permisos,per_insercion,per_eliminar,per_actualizar,per_consultar,cod_rol])
+           cursor.execute("SELECT sp_permisos('I', %s,%s,%s,%s,%s,%s)", [cod_permisos,per_insercion,per_eliminar,per_actualizar,per_consultar,cod_rol])
            cursor.close() #para cerrar la conexion a base de datos
 
            return Response({'message':'¡Permiso creado correctamente!'}, status = status.HTTP_201_CREATED) #Envia los datos actualizados
@@ -206,7 +206,7 @@ def permiso_detalle_api_view(request, pk = None): #pk 2
                  cod_rol = request.data.get('cod_rol')
 
                 cursor = connection.cursor()                    
-                cursor.execute("SELECT SP_PERMISOS('U', %s,%s,%s,%s,%s,%s)", [cod_permisos,per_insercion,per_eliminar,per_actualizar,per_consultar,cod_rol])
+                cursor.execute("SELECT sp_permisos('U', %s,%s,%s,%s,%s,%s)", [cod_permisos,per_insercion,per_eliminar,per_actualizar,per_consultar,cod_rol])
                 cursor.close() #para cerrar la conexion a base de dato
                     
                 return Response({'message':'¡Permiso actualizado correctamente!'}, status = status.HTTP_201_CREATED) #Envia los datos actualizados)
