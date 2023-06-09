@@ -89,7 +89,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'postgres',
         'USER': 'administrador',
-        'PASSWORD': 'Python2001@',
+        'PASSWORD': '@servidor1',
         'HOST': 'sistema-axe-test.postgres.database.azure.com',
         'DATABASE_PORT': '5432',
 
