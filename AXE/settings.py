@@ -90,7 +90,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'administrador',
         'PASSWORD': '@servidor1',
-        'HOST': 'sistema-axe-test.postgres.database.azure.com',
+        'HOST': 'bd-servidor-axe.postgres.database.azure.com',
         'DATABASE_PORT': '5432',
 
     }
