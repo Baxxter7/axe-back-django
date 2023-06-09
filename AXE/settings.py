@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'AXE.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'axe',
+        'NAME': 'postgres',
         'USER': 'administrador',
         'PASSWORD': 'Python2001@',
         'HOST': 'sistema-axe-test.postgres.database.azure.com',
